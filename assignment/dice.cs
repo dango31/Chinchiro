@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace assignment
 {
-    internal class dice
+    internal class Dice
     {
-        //クラスを生成した際、三つのランダムの値を生成する
-        public List<int> Dice()
+        //、三つのランダムの値を生成し、返却をする
+        public List<int> GetDiceList()
         {
             List<int> diceList = new List<int>(); //返却用
             //三つのランダムの数値を生成　サイコロなので1-6の範囲
@@ -24,6 +24,35 @@ namespace assignment
             diceList.Add(dice3);
             
             return diceList;
+        }
+
+        //３つのintを受け取り、役を返す
+        public string GetDiceHand(int x, int y, int z)
+        {
+            
+            if (x == y && y == z)   //ゾロ目
+            {
+                return x +"のゾロ目です";
+            }
+            else if (x == y || y == z || x == z)    //ニフ
+            {
+                if (x == y)
+                {
+                    return z + "ニフ";
+                }
+                if (y == z)
+                {
+                    return x + "ニフ";
+                }
+                if(x == z)
+                {
+                    return y + "ニフ";
+                }
+            }else
+            {
+                return "目無し";
+            }
+            return "";
         }
     }
 }
