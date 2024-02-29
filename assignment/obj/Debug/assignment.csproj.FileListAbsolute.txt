@@ -1,0 +1,10 @@
+C:\Projects\Chinchiro\assignment\bin\Debug\assignment.exe.config
+C:\Projects\Chinchiro\assignment\bin\Debug\assignment.exe
+C:\Projects\Chinchiro\assignment\bin\Debug\assignment.pdb
+C:\Projects\Chinchiro\assignment\obj\Debug\assignment.csproj.AssemblyReference.cache
+C:\Projects\Chinchiro\assignment\obj\Debug\assignment.Form1.resources
+C:\Projects\Chinchiro\assignment\obj\Debug\assignment.Properties.Resources.resources
+C:\Projects\Chinchiro\assignment\obj\Debug\assignment.csproj.GenerateResource.cache
+C:\Projects\Chinchiro\assignment\obj\Debug\assignment.csproj.CoreCompileInputs.cache
+C:\Projects\Chinchiro\assignment\obj\Debug\assignment.exe
+C:\Projects\Chinchiro\assignment\obj\Debug\assignment.pdb
