@@ -42,4 +42,4 @@ C:\projects\Chinchiro\assignment\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\projects\Chinchiro\assignment\bin\Debug\System.ValueTuple.xml
 C:\projects\Chinchiro\assignment\obj\Debug\assignment.csproj.SuggestedBindingRedirects.cache
 C:\projects\Chinchiro\assignment\obj\Debug\assignment.exe.config
-C:\projects\Chinchiro\assignment\obj\Debug\assignment.csproj.CopyComplete
+C:\Projects\Chinchiro\assignment\obj\Debug\assignment.csproj.Up2Date
