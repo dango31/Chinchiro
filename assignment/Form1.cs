@@ -134,5 +134,45 @@ namespace assignment
             }
            
         }
+        /** x = サイコロの出目
+         * 　y ~ ダイスのイメージの管理番号
+         */
+        private void ImageDice(int x, int y)
+        {
+            string Path = @"C:\\temp\image\dice";
+            switch(x)
+            {
+                case 1:
+                    Path += "1.png";
+                    break;
+                case 2:
+                    Path += "2.png";
+                    break;
+                case 3:
+                    Path += "3.png";
+                    break;
+                case 4:
+                    Path += "4.png";
+                    break;
+                case 5:
+                    Path += "5.png";
+                    break;
+                case 6:
+                    Path += "6.png";
+                    break;
+            }
+            switch(y) { 
+            case 1:
+                    this.dice1.Image = System.Drawing.Image.FromFile(Path);
+                    break;
+            case 2:
+                    this.dice2.Image = System.Drawing.Image.FromFile(Path);
+                    break;
+            case 3:
+                    this.dice3.Image = System.Drawing.Image.FromFile(Path);
+                    break;
+            }
+            
+        }
     }
 }
