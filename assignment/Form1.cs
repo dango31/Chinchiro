@@ -12,18 +12,33 @@ namespace assignment
 {
     public partial class Form1 : Form
     {
-        private Random rnd;
-       
-      
+        private readonly Dice dice;
+        private readonly Random random;
+
         public Form1()
         {
             InitializeComponent();
+            dice = new Dice();
+            // シード値を指定してRandomクラスを初期化
+            random = new Random();
         }
 
+        //数値以外を入力させない
+        private void BetBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\b')
+            {
+                return;
+            }
+
+
+            if ((e.KeyChar < '0' || '9' < e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
         private void button2_Click(object sender, EventArgs e)
         {
-            
-            Dice dice = new Dice();
             List<int> dices = dice.GetDiceList();
             string hands = dice.GetDiceHand(dices[0], dices[1], dices[2]);
             ImageDice(dices[0], 1);
@@ -34,10 +49,64 @@ namespace assignment
             label7.Text = dices[1].ToString();
             label8.Text = dices[2].ToString();
 
+            // 以下を追加
+            string playerHand = dice.GetDiceHand(dices[0], dices[1], dices[2]);
+            PlayerHand.Text = "Player: " + playerHand;
+
+            string cpuHand = dice.GetRandomCPUHand();
+            CPUHand.Text = "CPU: " + cpuHand;
+
+            // 勝敗判定
+            Dice.Result result = dice.GetResult(playerHand, cpuHand);
+            UpdatePoints(result);
+
             timer1.Enabled = false;
-            timer2.Enabled=false;
+            timer2.Enabled = false;
             timer3.Enabled = false;
             button2.Enabled = false;
+        }
+
+        // ポイントを更新するメソッド
+        private void UpdatePoints(Dice.Result result)
+        {
+            try
+            {
+                int playerPoints;
+                int cpuPoints;
+
+                if (int.TryParse(PlayerPoint.Text, out playerPoints) && int.TryParse(CpuPoint.Text, out cpuPoints))
+                {
+                    switch (result)
+                    {
+                        case Dice.Result.PlayerWins:
+                            playerPoints += int.Parse(BetBox.Text);
+                            cpuPoints -= int.Parse(BetBox.Text);
+                            LabelResult.Text = "勝利！";
+                            break;
+                        case Dice.Result.CpuWins:
+                            playerPoints -= int.Parse(BetBox.Text);
+                            cpuPoints += int.Parse(BetBox.Text);
+                            LabelResult.Text = "敗北…";
+                            break;
+                        case Dice.Result.Draw:
+                            LabelResult.Text = "引き分け";
+                            break;
+                    }
+
+                    PlayerPoint.Text = playerPoints.ToString();
+                    CpuPoint.Text = cpuPoints.ToString();
+                    BetBox.Text = "0";
+                }
+                else
+                {
+                    // エラー処理
+                    MessageBox.Show("ポイントの更新に失敗しました。数値を入力してください。");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -46,113 +115,36 @@ namespace assignment
             timer2.Enabled = true;
             timer3.Enabled = true;
             button2.Enabled = true;
+            label6.Text = "";
+            label7.Text = "";
+            label8.Text = "";
+            label1.Text = "";
+            LabelResult.Text = "";
         }
 
         public void timer1_Tick(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            int p=rnd.Next(1,7);
-            ImageDice(p,1);
-           
-        //    int p = rnd.Next(1, 7);
-        //    if (p == 5)
-        //    {
-        //        dice1.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d1-150x150.png");
-
-        //    }
-        //    if (p == 1)
-        //    {
-        //        dice1.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d2-150x150.png");
-        //    }
-        //    if (p == 4)
-        //    {
-        //        dice1.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d3-150x150.png");
-        //    }
-        //    if (p == 2)
-        //    {
-        //        dice1.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d4-150x150.png");
-        //    }
-        //    if (p == 6)
-        //    {
-        //        dice1.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d5-150x150.png");
-        //    }
-        //    if (p == 3)
-        //    {
-        //        dice1.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d6-150x150.png");
-        //    }
-          
+            int p = random.Next(1, 7);
+            ImageDice(p, 1);
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            int x = rnd.Next(1, 7);
+            int x = random.Next(1, 7);
             ImageDice(x, 2);
-            //if (x == 2)
-            //{
-            //    dice2.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d1-150x150.png");
-            //}
-            //if (x == 5)
-            //{
-            //    dice2.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d2-150x150.png");
-            //}
-            //if (x == 6)
-            //{
-            //    dice2.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d3-150x150.png");
-            //}
-            //if (x == 1)
-            //{
-            //    dice2.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d4-150x150.png");
-            //}
-            //if (x == 3)
-            //{
-            //    dice2.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d5-150x150.png");
-            //}
-            //if (x == 4)
-            //{
-            //    dice2.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d6-150x150.png");
-            //}
-
         }
 
         private void timer3_Tick(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            int y = rnd.Next(1,7 );
+            int y = random.Next(1, 7);
             ImageDice(y, 3);
-            //if (y == 1)
-            //{
-            //    dice3.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d1-150x150.png");
-            //}
-            //if (y == 2)
-            //{
-            //    dice3.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d2-150x150.png");
-            //}
-            //if (y == 3)
-            //{
-            //    dice3.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d3-150x150.png");
-            //}
-            //if(y== 4)
-            //{
-            //    dice3.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d4-150x150.png");
-            //}
-            //if(y == 5)
-            //{
-            //    dice3.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d5-150x150.png");
-            //}
-            //if(y==6)
-            //{
-            //    dice3.Image = System.Drawing.Image.FromFile(@"C:\\temp\image\dice2d6-150x150.png");
-            //}
-
         }
-        /** x = サイコロの出目
-         * 　y ~ ダイスのイメージの管理番号
-         */
-        public void ImageDice(int x, int y)
+
+
+        private void ImageDice(int x, int y)
         {
             string Path = @"C:\\temp\image\dice";
-            switch(x)
+            switch (x)
             {
                 case 1:
                     Path += "1.png";
@@ -173,21 +165,34 @@ namespace assignment
                     Path += "6.png";
                     break;
             }
-            switch(y) { 
-            case 1:
+            switch (y)
+            {
+                case 1:
                     this.dice1.Image = System.Drawing.Image.FromFile(Path);
                     break;
-            case 2:
+                case 2:
                     this.dice2.Image = System.Drawing.Image.FromFile(Path);
                     break;
-            case 3:
+                case 3:
                     this.dice3.Image = System.Drawing.Image.FromFile(Path);
                     break;
             }
-            
+
         }
 
-       
-      
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            PlayerPoint.Text = "100";
+            CpuPoint.Text = "100";  
+        }
+
+        private void CpuPoint_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
