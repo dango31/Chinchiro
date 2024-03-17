@@ -8,21 +8,20 @@ namespace assignment
 {
     internal class Chinchiroyaku
     {
-        public enum ChinchirorinYaku
+       public string Hand { get; set; }
+       public int Score {  get; set; }
+
+        public int GetScore()
         {
-            Arashi1,
-            Arashi5,
-            Arashi,
-            Deme1,
-            Deme2,
-            Deme3,
-            Deme4,
-            Deme5,
-            Deme6,
-            Hifumi,
-            Sigoro,
-            Menashi
+            return this.Score;
+        } 
+
+        public string Getint()
+        {
+            return this.Hand;
         }
+
 
     }
 }
+

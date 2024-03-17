@@ -40,44 +40,66 @@ namespace assignment
         }
 
        
-        public string GetDiceHand(int x, int y, int z)
+        public Chinchiroyaku GetDiceHand(int x, int y, int z,int score)
         {
+            Chinchiroyaku chin=new Chinchiroyaku();
             if (x == y && y == z) // ゾロ目
             {
-                return x + "のゾロ目です";
+                if (x==1)
+                {
+                    chin.Hand="ピンゾロ";
+                    chin.Score = score * 4;
+                    return chin;
+
+                }
+                else
+                {
+                    chin.Hand = x + "のゾロ目です";
+                    chin.Score = score * 2;
+                    return chin;
+                }
             }
             else if (x == y || y == z || x == z) // ニフ
             {
                 if (x == y)
                 {
-                    return z + "の目";
+                    chin.Hand = z+"の目";
+                    chin.Score = score+z;
+                    return chin;
                 }
                 if (y == z)
                 {
-                    return x + "の目";
+                    chin.Hand = x + "の目";
+                    chin.Score = score+x;
+                    return chin;
                 }
                 if (x == z)
                 {
-                    return y + "の目";
+                    chin.Hand = y + "の目";
+                    chin.Score = score+y;
+                    return chin;
                 }
             }
-            else if (x == 1 && y == 1 && z == 1) // ピンゾロ
-            {
-                return "ピンゾロ";
-            }
+           
             else if (x + y + z == 15) // シゴロ
             {
-                return "シゴロ";
+                chin.Hand = "シゴロ";
+                chin.Score = score*3;
+                return chin;
             }
             else if (x + y + z == 6) // ヒフミ
             {
-                return "ヒフミ";
+                chin.Hand = "ヒフミ";
+                chin.Score = score/2;
+                return chin;
             }
 
-            return "目無し";
+            chin.Hand="目無し";
+            chin.Score=score;
+            return chin;
         }
 
-        public string GetRandomCPUHand()
+        public Chinchiroyaku GetRandomCPUHand(int score)
         {
            
             List<int> diceValues = new List<int>
@@ -89,30 +111,20 @@ namespace assignment
             };
 
          
-            return GetDiceHand(diceValues[0], diceValues[1], diceValues[2]);
+            return GetDiceHand(diceValues[0], diceValues[1], diceValues[2], score);
         }
 
-        public Result GetResult(string playerHand, string cpuHand)
+        public Result GetResult(Chinchiroyaku Playerchin,Chinchiroyaku Cpuchin)
         {
+                       
+            Chinchiroyaku generatedCPUHand = GetRandomCPUHand(Cpuchin.GetScore());
+
            
-            List<string> handsOrder = new List<string>
-    
-            {        
-                "ヒフミ", "目無し", "1の目", "2の目", "3の目", "4の目", "5の目", "6の目",        
-                "2のゾロ目", "3のゾロ目", "4のゾロ目", "5のゾロ目", "6のゾロ目", "ピンゾロ"    
-            };
-
-            
-            string generatedCPUHand = GetRandomCPUHand();
-
-            int playerIndex = handsOrder.IndexOf(playerHand);
-            int cpuIndex = handsOrder.IndexOf(generatedCPUHand);
-
-            if (playerIndex < cpuIndex)
+            if (Playerchin.GetScore()>Cpuchin.GetScore())
             {
                 return Result.PlayerWins;
             }
-            else if (playerIndex > cpuIndex)
+            else if (Playerchin.GetScore() < Cpuchin.GetScore())
             {
                 return Result.CpuWins;
             }

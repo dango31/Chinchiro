@@ -21,6 +21,7 @@ namespace assignment
             dice = new Dice();
             // シード値を指定してRandomクラスを初期化
             random = new Random();
+           // string Point = "";
         }
 
         //数値以外を入力させない
@@ -39,31 +40,40 @@ namespace assignment
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            int Point = int.Parse(BetBox.Text);
             List<int> dices = dice.GetDiceList();
-            string hands = dice.GetDiceHand(dices[0], dices[1], dices[2]);
+             Chinchiroyaku yaku = dice.GetDiceHand(dices[0], dices[1], dices[2],Point);
             ImageDice(dices[0], 1);
             ImageDice(dices[1], 2);
             ImageDice(dices[2], 3);
-            label1.Text = hands;
+            label1.Text = yaku.Getint();
             label6.Text = dices[0].ToString();
             label7.Text = dices[1].ToString();
             label8.Text = dices[2].ToString();
+            
 
             // 以下を追加
-            string playerHand = dice.GetDiceHand(dices[0], dices[1], dices[2]);
-            PlayerHand.Text = "Player: " + playerHand;
 
-            string cpuHand = dice.GetRandomCPUHand();
-            CPUHand.Text = "CPU: " + cpuHand;
+            int PlayerPoint = Point;
+            PlayerPoint += yaku.GetScore();
+            PlayerHand.Text = "Player: " + PlayerPoint;
+
+            int CpuPoint = Point;
+            CpuPoint += yaku.GetScore();
+            CPUHand.Text = "CPU:" + CpuPoint;
 
             // 勝敗判定
-            Dice.Result result = dice.GetResult(playerHand, cpuHand);
+            Chinchiroyaku Cpuchin = dice.GetRandomCPUHand(Point);
+            Dice.Result result = dice.GetResult(yaku,Cpuchin);
             UpdatePoints(result);
 
             timer1.Enabled = false;
             timer2.Enabled = false;
             timer3.Enabled = false;
             button2.Enabled = false;
+            CPUHand.Text = Cpuchin.Getint();
+            PlayerHand.Text=yaku.Getint();
+            
         }
 
         // ポイントを更新するメソッド

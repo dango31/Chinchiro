@@ -246,13 +246,12 @@
             // CpuPoint
             // 
             this.CpuPoint.AutoSize = true;
-            this.CpuPoint.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.CpuPoint.Font = new System.Drawing.Font("MS UI Gothic", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.CpuPoint.Location = new System.Drawing.Point(825, 167);
+            this.CpuPoint.BackColor = System.Drawing.Color.White;
+            this.CpuPoint.Font = new System.Drawing.Font("MS UI Gothic", 14F, System.Drawing.FontStyle.Bold);
+            this.CpuPoint.Location = new System.Drawing.Point(867, 245);
             this.CpuPoint.Name = "CpuPoint";
-            this.CpuPoint.Size = new System.Drawing.Size(115, 33);
+            this.CpuPoint.Size = new System.Drawing.Size(0, 28);
             this.CpuPoint.TabIndex = 19;
-            this.CpuPoint.Text = "ポイント";
             this.CpuPoint.Click += new System.EventHandler(this.CpuPoint_Click);
             // 
             // PlayerPoint
@@ -268,12 +267,13 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("MS UI Gothic", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label12.Location = new System.Drawing.Point(850, 245);
+            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.label12.Font = new System.Drawing.Font("MS UI Gothic", 16F, System.Drawing.FontStyle.Bold);
+            this.label12.Location = new System.Drawing.Point(827, 167);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(57, 28);
+            this.label12.Size = new System.Drawing.Size(115, 33);
             this.label12.TabIndex = 21;
-            this.label12.Text = "100";
+            this.label12.Text = "ポイント";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label13
